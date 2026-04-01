@@ -3,23 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borang Multi-Step</title>
+    <title>Borang Pendaftaran Multi-Step</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <form id="form">
-        <div class="step">
-            <h2>Langkah 1</h2>
-            <input type="text" id="ic" placeholder="No. IC" required>
-            <input type="number" id="telefon" placeholder="No. Telefon" required>
-        </div>
+    <div class="container">
+        <form id="form">
+            
+            <div class="step">
+                <h2>Langkah 1: Maklumat Peribadi</h2>
+                
+                <label for="nama">Nama Penuh</label>
+                <input type="text" id="nama" placeholder="Contoh: Muhammad Aiman" required>
 
-        <div class="navigation">
-            <button type="button" onclick="prev()">Kembali</button>
-            <button type="button" onclick="next()">Seterusnya</button>
-        </div>
-    </form>
+                <label for="ic">No. Kad Pengenalan</label>
+                <input type="text" id="ic" placeholder="Contoh: 96010110XXXX" required>
+
+                <label for="tarikh_lahir">Tarikh Lahir</label>
+                <input type="date" id="tarikh_lahir" required>
+
+                <label for="jantina">Jantina</label>
+                <select id="jantina" required>
+                    <option value="">-- Pilih Jantina --</option>
+                    <option value="Lelaki">Lelaki</option>
+                    <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+
+            <div class="step" style="display:none;">
+                <h2>Langkah 2: Hubungan</h2>
+                
+                <label for="telefon">No. Telefon</label>
+                <input type="number" id="telefon" placeholder="Contoh: 0123456789" required>
+
+                <label for="juzuk">Bilangan Juzuk Hafalan</label>
+                <input type="number" id="juzuk" placeholder="Contoh: 30" required>
+            </div>
+
+            <div class="step" style="display:none;">
+                <h2>Langkah 3: Akademik</h2>
+                
+                <label for="spm">Keputusan SPM (Bilangan A)</label>
+                <input type="text" id="spm" placeholder="Contoh: 9A">
+
+                <label for="stpm">Keputusan STPM / Setaraf</label>
+                <input type="text" id="stpm" placeholder="Contoh: 3.50 / Mumtaz">
+
+                <label for="cgpa">CGPA Terkini</label>
+                <input type="number" id="cgpa" step="0.01" placeholder="Contoh: 3.85">
+            </div>
+
+            <div class="navigation">
+                <button type="button" id="prevBtn" onclick="prev()" style="display:none;">Kembali</button>
+                <button type="button" id="nextBtn" onclick="next()">Seterusnya</button>
+            </div>
+
+        </form>
+    </div>
 
     <script src="script.js"></script>
 </body>
