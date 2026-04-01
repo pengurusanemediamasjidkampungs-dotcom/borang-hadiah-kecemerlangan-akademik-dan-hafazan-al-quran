@@ -33,14 +33,26 @@ h1 {
     margin-top: 20px;
 }
 
+/* KEMASKINI: Bahagian Input, Select & Textarea */
 input, select, textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* Besarkan sedikit untuk mudah ditekan */
     border-radius: 8px;
-    border: none;
+    border: 1px solid #334155; /* Tambah border halus agar nampak kemas */
+    background: #f8fafc; /* Warna latar belakang input yang lebih lembut */
+    color: #000;
     margin-top: 5px;
-    margin-bottom: 10px;
-    box-sizing: border-box; /* Sangat penting untuk responsif */
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    font-size: 16px; /* Mengelakkan auto-zoom pada iPhone semasa menaip */
+    display: block;
+    appearance: none; /* Menghilangkan gaya lalai browser tertentu */
+    -webkit-appearance: none;
+}
+
+/* Membetulkan isu input tarikh pada sesetengah peranti */
+input[type="date"] {
+    min-height: 45px;
 }
 
 label {
@@ -90,30 +102,37 @@ button:hover {
     display: none;
 }
 
-/* --- Kod Responsif (Mobile & Tablet) --- */
+/* --- KEMASKINI: Kod Responsif (Mobile & Tablet) --- */
 
-/* Untuk skrin bersaiz 600px dan ke bawah */
 @media (max-width: 600px) {
     .container {
-        padding: 15px; /* Kurangkan ruang tepi sedikit */
+        padding: 10px; /* Kurangkan ruang tepi */
     }
 
     h1 {
-        font-size: 1.5rem; /* Kecilkan saiz tajuk pada mobile */
-    }
-
-    .grid {
-        grid-template-columns: 1fr; /* Tukar daripada 2 kolum kepada 1 kolum */
-    }
-
-    /* Memastikan butang navigasi memenuhi ruang dengan cantik */
-    button {
-        width: 48%; 
-        padding: 15px;
-        font-size: 16px;
+        font-size: 1.5rem;
     }
 
     .card {
         padding: 15px; /* Kurangkan padding dalam kad */
+    }
+
+    .grid {
+        grid-template-columns: 1fr; /* Susun menegak pada mobile */
+        gap: 0; /* Rapatkan sedikit ruang */
+    }
+
+    /* Memastikan butang navigasi memenuhi ruang dengan cantik */
+    .nav-buttons {
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+
+    button {
+        flex: 1; /* Memberi saiz yang sama rata pada kedua-dua butang */
+        width: auto; /* Override width 48% sebelum ini */
+        padding: 15px 5px;
+        font-size: 14px;
     }
 }
