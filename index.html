@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borang Kecemerlangan</title>
+<style>
+body{font-family:Arial, sans-serif;background:#0f172a;color:#fff;margin:0;padding:0}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:#1e293b;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+h1,h2{margin:0 0 10px}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:none;margin-top:5px;margin-bottom:10px}
+label{font-size:14px;color:#cbd5f5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{background:#22c55e;border:none;padding:12px;border-radius:10px;color:white;font-weight:bold;cursor:pointer}
+button:hover{background:#16a34a}
+.progress{height:10px;background:#334155;border-radius:10px;overflow:hidden;margin-bottom:20px}
+.progress-bar{height:100%;width:0;background:#22c55e;transition:0.3s}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📄 Borang Kecemerlangan</h1>
+<div class="progress"><div class="progress-bar" id="progress"></div></div><form id="form"><div class="card step">
+<h2>Maklumat Diri</h2>
+<label>Nama Penuh</label>
+<input required>
+<label>No IC</label>
+<input required>
+<div class="grid">
+<div><label>Tarikh Lahir</label><input type="date"></div>
+<div><label>Jantina</label><select><option>Lelaki</option><option>Perempuan</option></select></div>
+</div>
+<label>Telefon</label>
+<input>
+</div><div class="card step hidden">
+<h2>Akademik</h2>
+<label>SPM</label>
+<input placeholder="Contoh: 5A">
+<label>STPM / Diploma</label>
+<input>
+<label>CGPA</label>
+<input>
+</div><div class="card step hidden">
+<h2>Hafazan</h2>
+<label>Jumlah Juzuk</label>
+<input type="number" max="30">
+</div><div class="card step hidden">
+<h2>Pengesahan</h2>
+<p>Saya mengaku maklumat adalah benar.</p>
+</div><div style="display:flex;justify-content:space-between">
+<button type="button" onclick="prev()">⬅ Back</button>
+<button type="button" onclick="next()">Next ➡</button>
+</div></form>
+</div><script>
+let step=0;
+const steps=document.querySelectorAll('.step');
+const progress=document.getElementById('progress');
+
+function showStep(){
+steps.forEach((s,i)=>{
+s.classList.toggle('hidden',i!==step)
+});
+progress.style.width=((step+1)/steps.length*100)+'%';
+}
+
+function next(){
+if(step<steps.length-1){step++;showStep()}else{alert('Borang dihantar!')}
+}
+
+function prev(){
+if(step>0){step--;showStep()}
+}
+
+showStep();
+</script></body>
+</html>
