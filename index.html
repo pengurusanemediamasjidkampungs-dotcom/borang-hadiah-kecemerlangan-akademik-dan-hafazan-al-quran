@@ -18,9 +18,11 @@
             <div class="card step">
                 <h2>Maklumat Diri</h2>
                 <label>Nama Penuh</label>
-                <input required>
+                <input type="text" placeholder="Nama mengikut IC" required>
+                
                 <label>No IC</label>
-                <input required>
+                <input type="text" placeholder="Contoh: 01020310xxxx" required>
+                
                 <div class="grid">
                     <div>
                         <label>Tarikh Lahir</label>
@@ -29,37 +31,40 @@
                     <div>
                         <label>Jantina</label>
                         <select>
-                            <option>Lelaki</option>
-                            <option>Perempuan</option>
+                            <option value="Lelaki">Lelaki</option>
+                            <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
                 </div>
+                
                 <label>Telefon</label>
-                <input>
+                <input type="tel" placeholder="Contoh: 0123456789">
             </div>
 
             <div class="card step hidden">
                 <h2>Akademik</h2>
                 <label>SPM</label>
-                <input placeholder="Contoh: 5A">
+                <input type="text" placeholder="Contoh: 5A 3B">
+                
                 <label>STPM / Diploma</label>
-                <input>
+                <input type="text" placeholder="Nama Kursus/Sijil">
+                
                 <label>CGPA</label>
-                <input>
+                <input type="number" step="0.01" placeholder="Contoh: 3.75">
             </div>
 
             <div class="card step hidden">
                 <h2>Hafazan</h2>
                 <label>Jumlah Juzuk</label>
-                <input type="number" max="30">
+                <input type="number" min="0" max="30" placeholder="0-30">
             </div>
 
             <div class="card step hidden">
                 <h2>Pengesahan</h2>
-                <p>Saya mengaku maklumat adalah benar.</p>
+                <p>Saya mengaku bahawa semua maklumat yang diberikan adalah benar dan sahih.</p>
             </div>
 
-            <div style="display:flex; justify-content:space-between">
+            <div class="nav-buttons" style="display:flex; justify-content:space-between; gap: 10px;">
                 <button type="button" onclick="prev()">⬅ Back</button>
                 <button type="button" onclick="next()">Next ➡</button>
             </div>
