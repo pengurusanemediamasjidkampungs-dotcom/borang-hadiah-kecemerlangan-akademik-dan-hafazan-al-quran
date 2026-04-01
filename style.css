@@ -1,138 +1,17 @@
-/* --- Gaya Asas (Desktop & Global) --- */
-body {
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    color: #fff;
-    margin: 0;
-    padding: 0;
-}
+/* Anda boleh menambah gaya susun atur borang di sini */
 
-.container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.card {
-    background: #1e293b;
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-h1, h2 {
-    margin: 0 0 10px;
-}
-
-h1 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* KEMASKINI: Bahagian Input, Select & Textarea */
 input, select, textarea {
-    width: 100%;
-    padding: 12px; /* Besarkan sedikit untuk mudah ditekan */
-    border-radius: 8px;
-    border: 1px solid #334155; /* Tambah border halus agar nampak kemas */
-    background: #f8fafc; /* Warna latar belakang input yang lebih lembut */
-    color: #000;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    box-sizing: border-box;
-    font-size: 16px; /* Mengelakkan auto-zoom pada iPhone semasa menaip */
     display: block;
-    appearance: none; /* Menghilangkan gaya lalai browser tertentu */
-    -webkit-appearance: none;
-}
-
-/* Membetulkan isu input tarikh pada sesetengah peranti */
-input[type="date"] {
-    min-height: 45px;
-}
-
-label {
-    font-size: 14px;
-    color: #cbd5f5;
-}
-
-/* Grid asal: 2 kolum untuk skrin besar */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: outline 0.2s ease-in-out;
 }
 
 button {
-    background: #22c55e;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 10px;
-    color: white;
-    font-weight: bold;
+    padding: 10px 20px;
     cursor: pointer;
-    transition: background 0.2s;
-    min-width: 100px;
 }
 
-button:hover {
-    background: #16a34a;
-}
-
-.progress {
-    height: 10px;
-    background: #334155;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0;
-    background: #22c55e;
-    transition: 0.3s;
-}
-
-.hidden {
-    display: none;
-}
-
-/* --- KEMASKINI: Kod Responsif (Mobile & Tablet) --- */
-
-@media (max-width: 600px) {
-    .container {
-        padding: 10px; /* Kurangkan ruang tepi */
-    }
-
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .card {
-        padding: 15px; /* Kurangkan padding dalam kad */
-    }
-
-    .grid {
-        grid-template-columns: 1fr; /* Susun menegak pada mobile */
-        gap: 0; /* Rapatkan sedikit ruang */
-    }
-
-    /* Memastikan butang navigasi memenuhi ruang dengan cantik */
-    .nav-buttons {
-        display: flex;
-        gap: 10px;
-        width: 100%;
-    }
-
-    button {
-        flex: 1; /* Memberi saiz yang sama rata pada kedua-dua butang */
-        width: auto; /* Override width 48% sebelum ini */
-        padding: 15px 5px;
-        font-size: 14px;
-    }
-}
+/* Warna outline dikawal secara dinamik melalui JavaScript */
