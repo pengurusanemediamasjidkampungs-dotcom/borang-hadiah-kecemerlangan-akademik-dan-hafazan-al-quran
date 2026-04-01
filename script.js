@@ -1,35 +1,53 @@
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyDo_nNimiTUcuyKNGa0cZyq9WPgSZUMhHUc8HSjZHiym8zZHMAJSCQRDluFTdvm65d/exec';
 let step = 0;
 const steps = document.querySelectorAll('.step');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
+/**
+ * Menguruskan paparan langkah borang dan butang navigasi
+ */
 function showStep() {
   steps.forEach((s, index) => {
     s.style.display = index === step ? 'block' : 'none';
   });
+
+  // Kawalan butang Kembali
+  if (prevBtn) {
+    prevBtn.style.display = step === 0 ? 'none' : 'inline-block';
+  }
+
+  // Kawalan teks butang Seterusnya/Hantar
+  if (nextBtn) {
+    nextBtn.innerText = step === steps.length - 1 ? 'Hantar Borang' : 'Seterusnya';
+  }
 }
 
+/**
+ * Validasi setiap medan input
+ */
 function validateField(el) {
   let valid = true;
   let value = el.value.trim();
 
-  // Validasi jika field 'required' ATAU jika ia mempunyai nilai
+  // Validasi jika 'required' atau mempunyai nilai
   if (el.hasAttribute('required') && value === '') {
     valid = false;
   } else if (value !== '') {
     if (el.type === 'number') {
       if (isNaN(value)) valid = false;
     }
-    // Validasi spesifik untuk IC
-    if (el.id === 'ic' && value.length < 10) {
+    // Validasi No. IC (min 12 digit selalunya untuk MY)
+    if (el.id === 'ic' && value.length < 12) {
       valid = false;
     }
-    // Validasi spesifik untuk Telefon
-    if (el.id === 'telefon' && value.length < 9) {
+    // Validasi Telefon (min 10 digit)
+    if (el.id === 'telefon' && value.length < 10) {
       valid = false;
     }
   }
 
-  // Maklum balas visual
+  // Maklum balas visual (Outline)
   if (!valid && el.hasAttribute('required')) {
     el.style.outline = '2px solid #ef4444'; // Merah
   } else if (valid && value !== '') {
@@ -41,13 +59,16 @@ function validateField(el) {
   return valid;
 }
 
+/**
+ * Validasi semua input dalam langkah semasa
+ */
 function validateStep() {
   const current = steps[step];
   const inputs = current.querySelectorAll('input, select, textarea');
   let stepValid = true;
 
   inputs.forEach(el => {
-    if (el.type === 'button' || el.type === 'submit') return;
+    if (el.type === 'button') return;
     if (!validateField(el)) {
       stepValid = false;
     }
@@ -55,73 +76,76 @@ function validateStep() {
 
   if (!stepValid) {
     setTimeout(() => {
-      alert('Sila lengkapkan semua maklumat yang wajib dengan betul sebelum meneruskan.');
+      alert('Sila lengkapkan maklumat yang bertanda merah dengan betul.');
     }, 50);
   }
 
   return stepValid;
 }
 
+/**
+ * Fungsi butang Seterusnya
+ */
 function next() {
   const isValid = validateStep();
   if (!isValid) return;
 
-  // Jika belum sampai langkah terakhir, teruskan ke langkah seterusnya
   if (step < steps.length - 1) {
     step++;
     showStep();
   } else {
-    // LANGKAH TERAKHIR: Hantar data ke Google Sheets
     submitToGoogleSheet();
   }
 }
 
+/**
+ * Penghantaran data ke Google Sheets melalui GAS
+ */
 function submitToGoogleSheet() {
   const form = document.getElementById('form');
-  const submitBtn = document.querySelector('button[onclick="next()"]');
   
-  // Tukar teks butang untuk tunjuk status loading
-  const originalBtnText = submitBtn.innerText;
-  submitBtn.innerText = 'Menghantar...';
-  submitBtn.disabled = true;
+  // Tukar status butang
+  const originalBtnText = nextBtn.innerText;
+  nextBtn.innerText = 'Menghantar...';
+  nextBtn.disabled = true;
 
-  // Kumpul semua data dari input dalam bentuk JSON
+  // Kumpul data secara dinamik berdasarkan ID elemen
   const formData = {};
   const allInputs = form.querySelectorAll('input, select, textarea');
   allInputs.forEach(input => {
-    if (input.id || input.name) {
-      formData[input.id || input.name] = input.value;
+    if (input.id) {
+      formData[input.id] = input.value;
     }
   });
 
-  // Hantar ke GAS menggunakan Fetch API
   fetch(scriptURL, {
     method: 'POST',
-    mode: 'no-cors', // Penting untuk mengelakkan isu CORS dengan GAS
+    mode: 'no-cors',
     cache: 'no-cache',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData)
   })
   .then(() => {
-    alert('Borang berjaya dihantar!');
+    alert('Tahniah! Borang anda telah berjaya dihantar.');
     form.reset();
     step = 0;
     showStep();
-    // Reset semula semua outline
+    // Buang semua outline selepas reset
     document.querySelectorAll('input, select, textarea').forEach(el => el.style.outline = 'none');
   })
   .catch(error => {
-    console.error('Ralat!', error.message);
-    alert('Maaf, terdapat ralat semasa menghantar borang.');
+    console.error('Error:', error);
+    alert('Ralat berlaku semasa penghantaran. Sila cuba lagi.');
   })
   .finally(() => {
-    submitBtn.innerText = originalBtnText;
-    submitBtn.disabled = false;
+    nextBtn.innerText = originalBtnText;
+    nextBtn.disabled = false;
   });
 }
 
+/**
+ * Fungsi butang Kembali
+ */
 function prev() {
   if (step > 0) {
     step--;
@@ -129,11 +153,10 @@ function prev() {
   }
 }
 
-// Pasang validasi masa-nyata (real-time)
-const allInputs = document.querySelectorAll('input, select, textarea');
-allInputs.forEach(el => {
+// Event listener untuk validasi masa-nyata
+document.querySelectorAll('input, select, textarea').forEach(el => {
   el.addEventListener('input', () => validateField(el));
 });
 
-// Paparkan langkah pertama semasa dimuatkan
+// Jalankan paparan awal
 showStep();
